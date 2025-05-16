@@ -1,11 +1,12 @@
 from ultralytics import YOLO
+import cv2
 
-def load_model(model_path='yolov8n.pt'):
-    """Load and return YOLOv8 model."""
-    model = YOLO(model_path)
-    return model
-
-def run_inference(model, frame):
-    """Run inference on a single frame."""
-    results = model(frame)
-    return results
+class YOLOv8Detector:
+    def __init__(self, model_path='yolov8n.pt'):
+        self.model = YOLO(model_path)
+    
+    def detect(self, frame):
+        # Convert BGR to RGB
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.model(rgb_frame)
+        return results
